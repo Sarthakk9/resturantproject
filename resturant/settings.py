@@ -57,7 +57,7 @@ ROOT_URLCONF = 'resturant.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-       'DIRS': [os.path.join(BASE_DIR, 'template')],
+        'DIRS': [BASE_DIR,'template'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -82,6 +82,9 @@ DATABASES = {
     }
 }
 
+LOGIN_URL = '/dashboard/login/'           # redirect if not logged in
+LOGIN_REDIRECT_URL = '/dashboard/'       # after login
+LOGOUT_REDIRECT_URL = '/dashboard/login/'  # after logout
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
@@ -120,12 +123,14 @@ USE_TZ = True
 import os
 
 # Static files (CSS, JavaScript, Images)
+# settings.py
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),
-]
+# During development
+STATICFILES_DIRS = [BASE_DIR / 'static']
+
+# During production (collectstatic)
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 # Media files (Uploaded content)
 MEDIA_URL = '/media/'

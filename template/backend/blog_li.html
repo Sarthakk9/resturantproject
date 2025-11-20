@@ -1,0 +1,38 @@
+{% extends 'backend/base.html' %}
+
+{% block content %}
+<h2>Blog List</h2>
+<a href="{% url 'backend:blog_add' %}" class="btn btn-primary mb-3">+ Add Blog</a>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Image</th>
+            <th>Published Date</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for blog in blogs %}
+        <tr>
+            <td>{{ blog.title }}</td>
+            <td><img src="{{ blog.image.url }}" width="80"></td>
+            <td>{{ blog.published_date }}</td>
+            <td>
+                <a href="{% url 'backend:blog_edit' blog.pk %}" class="btn btn-sm btn-warning">Edit</a>
+                
+                <form action="{% url 'backend:blog_delete' blog.pk %}" method="post" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                </form>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="4">No blogs found.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

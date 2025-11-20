@@ -1,0 +1,91 @@
+{% extends 'backend/base.html' %}
+{% load static %}
+{% block content %}
+
+<style>
+    .form-container {
+        max-width: 600px;
+        margin: 40px auto;
+        background: #fff;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    h2 {
+        margin-bottom: 20px;
+        color: #357ABD;
+        font-weight: 600;
+        font-size: 28px;
+        text-align: center;
+    }
+
+    form label {
+        display: block;
+        margin-bottom: 6px;
+        font-weight: 600;
+        color: #444;
+    }
+
+    form input[type="text"],
+    form input[type="email"],
+    form textarea {
+        width: 100%;
+        padding: 10px 12px;
+        margin-bottom: 20px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        font-size: 16px;
+    }
+
+    .form-actions {
+        text-align: center;
+    }
+
+    .btn-submit {
+        background-color: #357ABD;
+        color: white;
+        padding: 12px 30px;
+        font-size: 16px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: 600;
+    }
+
+    .btn-submit:hover {
+        background-color: #285a8a;
+    }
+</style>
+
+<div class="form-container">
+    <h2>Add Contact</h2>
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+
+        <label for="{{ form.name.id_for_label }}">Name</label>
+        {{ form.name.errors }}
+        {{ form.name }}
+
+        <label for="{{ form.email.id_for_label }}">Email</label>
+        {{ form.email.errors }}
+        {{ form.email }}
+
+        <label for="{{ form.subject.id_for_label }}">Subject</label>
+        {{ form.subject.errors }}
+        {{ form.subject }}
+
+        <label for="{{ form.message.id_for_label }}">Message</label>
+        {{ form.message.errors }}
+        {{ form.message }}
+
+        <div class="form-actions">
+            <button type="submit" class="btn-submit">Save</button>
+        </div>
+    </form>
+</div>
+
+{% endblock %}

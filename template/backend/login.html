@@ -1,0 +1,155 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Login - Taste Admin</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700&display=swap" rel="stylesheet">
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+
+<style>
+    body {
+        margin: 0;
+        font-family: 'Heebo', sans-serif;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: linear-gradient(135deg, #4a90e2, #50e3c2); /* blue-green gradient */
+    }
+
+    .login-container {
+        background: #ffffff;
+        padding: 50px 40px;
+        border-radius: 15px;
+        box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+        width: 100%;
+        max-width: 400px;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+        animation: fadeIn 1s ease;
+    }
+
+    @keyframes fadeIn {
+        from {opacity: 0; transform: translateY(-20px);}
+        to {opacity: 1; transform: translateY(0);}
+    }
+
+    .login-container h2 {
+        margin-bottom: 30px;
+        color: #4a90e2; /* primary blue */
+        letter-spacing: 1px;
+    }
+
+    .input-group {
+        position: relative;
+        margin-bottom: 20px;
+    }
+
+    .input-group input {
+        width: 100%;
+        padding: 12px 15px 12px 40px;
+        border-radius: 8px;
+        border: 1px solid #cce0ff;
+        font-size: 14px;
+        outline: none;
+        transition: all 0.3s ease;
+    }
+
+    .input-group input:focus {
+        border-color: #4a90e2;
+        box-shadow: 0 0 8px rgba(74,144,226,0.3);
+    }
+
+    .input-group i {
+        position: absolute;
+        top: 50%;
+        left: 12px;
+        transform: translateY(-50%);
+        color: #4a90e2;
+    }
+
+    button {
+        background: #4a90e2;
+        color: #fff;
+        padding: 12px;
+        border: none;
+        border-radius: 10px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    button:hover {
+        transform: scale(1.05);
+        box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        background: #357abd;
+    }
+
+    .switch {
+        margin-top: 15px;
+        font-size: 14px;
+        color: #333;
+    }
+
+    .switch a {
+        color: #50e3c2; /* green-blue accent */
+        text-decoration: none;
+        font-weight: 500;
+    }
+
+    /* Shake animation for form errors */
+    .shake {
+        animation: shake 0.5s;
+    }
+
+    @keyframes shake {
+        0% { transform: translateX(0); }
+        25% { transform: translateX(-5px); }
+        50% { transform: translateX(5px); }
+        75% { transform: translateX(-5px); }
+        100% { transform: translateX(0); }
+    }
+
+    /* Responsive */
+    @media (max-width: 500px) {
+        .login-container {
+            padding: 40px 25px;
+        }
+    }
+</style>
+</head>
+<body>
+
+<div class="login-container {% if form.errors %}shake{% endif %}">
+    <h2>Admin Login</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+
+        <div class="input-group">
+            <i class="fas fa-user"></i>
+            {{ form.username.errors }}
+            {{ form.username }}
+        </div>
+
+        <div class="input-group">
+            <i class="fas fa-lock"></i>
+            {{ form.password.errors }}
+            {{ form.password }}
+        </div>
+
+        <button type="submit">Login</button>
+    </form>
+    <div class="switch">
+        Don't have an account? <a href="{% url 'backend:signup' %}">Sign Up</a>
+    </div>
+</div>
+
+</body>
+</html>

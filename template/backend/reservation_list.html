@@ -1,0 +1,116 @@
+{% extends 'backend/base.html' %}
+{% load static %}
+{% block content %}
+
+<style>
+    .table-container {
+        max-width: 1000px;
+        margin: 40px auto;
+        background: #fff;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    h2 {
+        margin-bottom: 20px;
+        color: #357ABD;
+        font-weight: 600;
+        font-size: 28px;
+        text-align: center;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+
+    th, td {
+        padding: 12px 15px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+    th {
+        background-color: #357ABD;
+        color: #fff;
+        font-weight: 600;
+    }
+
+    tr:hover {
+        background-color: #f5f9ff;
+    }
+
+    .btn {
+        display: inline-block;
+        padding: 8px 16px;
+        border-radius: 6px;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 14px;
+        transition: all 0.3s ease;
+    }
+
+    .btn-add {
+        background-color: #28a745;
+        color: #fff;
+        margin-bottom: 20px;
+    }
+    .btn-add:hover {
+        background-color: #218838;
+    }
+
+    .btn-edit {
+        background-color: #ffc107;
+        color: #000;
+    }
+    .btn-edit:hover {
+        background-color: #e0a800;
+    }
+
+    .btn-delete {
+        background-color: #dc3545;
+        color: #fff;
+    }
+    .btn-delete:hover {
+        background-color: #c82333;
+    }
+</style>
+
+<div class="table-container">
+    <h2>Reservations</h2>
+
+    <a href="{% url 'backend:add_reservation' %}" class="btn btn-add">+ Add Reservation</a>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th><th>Email</th><th>Phone</th>
+                <th>Date</th><th>Time</th><th>Guests</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for r in reservations %}
+            <tr>
+                <td>{{ r.name }}</td>
+                <td>{{ r.email }}</td>
+                <td>{{ r.phone }}</td>
+                <td>{{ r.date }}</td>
+                <td>{{ r.time }}</td>
+                <td>{{ r.guests }}</td>
+                <td>
+                    <a href="{% url 'backend:edit_reservation' r.id %}" class="btn btn-edit">Edit</a>
+                    <a href="{% url 'backend:delete_reservation' r.id %}" class="btn btn-delete">Delete</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="7" style="text-align:center;">No reservations yet</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}

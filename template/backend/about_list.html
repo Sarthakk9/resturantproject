@@ -1,0 +1,31 @@
+{% extends 'backend/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="dashboard-container">
+  <div class="card">
+    <div class="card-header">
+      <h3>{{ title|default:"About Form" }}</h3>
+      <div>
+        <a href="{% url 'backend:about_list' %}" class="btn btn-secondary">← Back to List</a>
+
+        {% if form.instance.pk %}
+          <a href="{% url 'backend:about_delete' form.instance.pk %}" 
+             class="btn btn-danger" 
+             onclick="return confirm('Are you sure you want to delete this entry?')">
+             Delete
+          </a>
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="card-body">
+      <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Save</button>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

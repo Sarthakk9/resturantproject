@@ -1,0 +1,87 @@
+{% extends 'backend/base.html' %}
+{% load static %}
+{% block content %}
+
+<style>
+    .form-container {
+        max-width: 600px;
+        margin: 40px auto;
+        background: #fff;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    h2 {
+        margin-bottom: 20px;
+        color: #357ABD;
+        font-weight: 600;
+        font-size: 28px;
+        text-align: center;
+    }
+
+    form label {
+        display: block;
+        margin-bottom: 6px;
+        font-weight: 600;
+        color: #444;
+    }
+
+    form input, form textarea, form select {
+        width: 100%;
+        padding: 10px 12px;
+        margin-bottom: 20px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        font-size: 16px;
+    }
+
+    .form-actions {
+        text-align: center;
+    }
+
+    .btn-submit {
+        background-color: #357ABD;
+        color: white;
+        padding: 12px 30px;
+        font-size: 16px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: background-color 0.3s ease;
+    }
+    .btn-submit:hover {
+        background-color: #285a8a;
+    }
+
+    .btn-cancel {
+        background-color: #6c757d;
+        color: white;
+        padding: 12px 30px;
+        border: none;
+        border-radius: 8px;
+        margin-left: 10px;
+        text-decoration: none;
+    }
+    .btn-cancel:hover {
+        background-color: #5a6268;
+    }
+</style>
+
+<div class="form-container">
+    <h2>{% if form.instance.pk %}Edit{% else %}Add{% endif %} Reservation</h2>
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <div class="form-actions">
+            <button type="submit" class="btn-submit">Save</button>
+            <a href="{% url 'backend:reservation_list' %}" class="btn-cancel">Cancel</a>
+        </div>
+    </form>
+</div>
+
+{% endblock %}

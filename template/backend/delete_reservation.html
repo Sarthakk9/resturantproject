@@ -1,0 +1,67 @@
+{% extends 'backend/base.html' %}
+{% load static %}
+{% block content %}
+
+<style>
+    .delete-container {
+        max-width: 500px;
+        margin: 60px auto;
+        background: #fff;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        text-align: center;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    h2 {
+        color: #dc3545;
+        font-size: 26px;
+        margin-bottom: 15px;
+    }
+
+    p {
+        margin-bottom: 25px;
+        font-size: 16px;
+    }
+
+    .btn-delete {
+        background-color: #dc3545;
+        color: white;
+        padding: 12px 30px;
+        border: none;
+        border-radius: 8px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+    .btn-delete:hover {
+        background-color: #c82333;
+    }
+
+    .btn-cancel {
+        background-color: #6c757d;
+        color: white;
+        padding: 12px 30px;
+        border: none;
+        border-radius: 8px;
+        margin-left: 10px;
+        text-decoration: none;
+    }
+    .btn-cancel:hover {
+        background-color: #5a6268;
+    }
+</style>
+
+<div class="delete-container">
+    <h2>Delete Reservation</h2>
+    <p>Are you sure you want to delete <strong>{{ reservation.name }}</strong>'s reservation?</p>
+
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn-delete">Yes, Delete</button>
+        <a href="{% url 'backend:reservation_list' %}" class="btn-cancel">Cancel</a>
+    </form>
+</div>
+
+{% endblock %}

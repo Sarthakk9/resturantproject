@@ -1,0 +1,79 @@
+{% extends 'backend/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="text-primary">Our Chefs</h2>
+        <a href="{% url 'backend:add_chef' %}" class="btn btn-success shadow-sm">Add New Chef</a>
+    </div>
+
+    <div class="row">
+        {% for chef in chefs %}
+        <div class="col-md-4 mb-4">
+            <div class="card chef-card h-100 shadow-sm">
+                {% if chef.image %}
+                <img src="{{ chef.image.url }}" class="card-img-top chef-img" alt="{{ chef.name }}">
+                {% else %}
+                <img src="{% static 'frontend/images/default-chef.jpg' %}" class="card-img-top chef-img" alt="Default Chef">
+                {% endif %}
+                <div class="card-body text-center">
+                    <h5 class="card-title">{{ chef.name }}</h5>
+                    <p class="card-text text-muted">{{ chef.position }}</p>
+                    <div class="social-icons mb-3">
+                        {% if chef.facebook %}
+                        <a href="{{ chef.facebook }}" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                        {% endif %}
+                        {% if chef.instagram %}
+                        <a href="{{ chef.instagram }}" target="_blank"><i class="fab fa-instagram"></i></a>
+                        {% endif %}
+                        {% if chef.twitter %}
+                        <a href="{{ chef.twitter }}" target="_blank"><i class="fab fa-twitter"></i></a>
+                        {% endif %}
+                    </div>
+                    <div class="d-flex justify-content-center gap-2">
+                        <a href="{% url 'backend:edit_chef' chef.id %}" class="btn btn-warning btn-sm">Edit</a>
+                        <a href="{% url 'backend:delete_chef' chef.id %}" class="btn btn-danger btn-sm">Delete</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <p class="text-center">No chefs found.</p>
+        {% endfor %}
+    </div>
+</div>
+
+<style>
+    .chef-card {
+        border-radius: 15px;
+        overflow: hidden;
+        transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .chef-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+    }
+    .chef-img {
+        height: 250px;
+        object-fit: cover;
+        border-bottom: 1px solid #eee;
+    }
+    .social-icons a {
+        color: #555;
+        font-size: 1.2rem;
+        margin: 0 5px;
+        transition: color 0.3s;
+    }
+    .social-icons a:hover {
+        color: #007bff;
+    }
+    .card-title {
+        font-weight: 600;
+        margin-bottom: 5px;
+    }
+    .card-text {
+        font-size: 0.9rem;
+    }
+</style>
+{% endblock %}

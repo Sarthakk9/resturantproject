@@ -1,0 +1,119 @@
+{% extends 'backend/base.html' %}
+{% load static %}
+{% block content %}
+
+<style>
+    .form-container {
+        max-width: 600px;
+        margin: 40px auto;
+        background: #fff;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    h2 {
+        margin-bottom: 20px;
+        color: #357ABD;
+        font-weight: 600;
+        font-size: 28px;
+        text-align: center;
+    }
+
+    form label {
+        display: block;
+        margin-bottom: 6px;
+        font-weight: 600;
+        color: #444;
+    }
+
+    form input[type="text"],
+    form textarea,
+    form input[type="file"] {
+        width: 100%;
+        padding: 10px 12px;
+        margin-bottom: 20px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        font-size: 16px;
+        font-family: inherit;
+        resize: vertical;
+    }
+
+    form textarea {
+        min-height: 100px;
+    }
+
+    .form-actions {
+        text-align: center;
+    }
+
+    .btn-submit {
+        background-color: #357ABD;
+        color: white;
+        padding: 12px 30px;
+        font-size: 16px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: background-color 0.3s ease;
+    }
+
+    .btn-submit:hover {
+        background-color: #285a8a;
+    }
+
+    /* Show existing image preview */
+    .current-image {
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+    .current-image img {
+        max-width: 150px;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+</style>
+
+<div class="form-container">
+    <h2>{{ title }}</h2>
+
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        {# Show existing image if editing #}
+        {% if form.instance and form.instance.image %}
+            <div class="current-image">
+                <p>Current Image:</p>
+                <img src="{{ form.instance.image.url }}" alt="{{ form.instance.name }}">
+            </div>
+        {% endif %}
+
+        {{ form.non_field_errors }}
+
+        <label for="{{ form.name.id_for_label }}">Name</label>
+        {{ form.name.errors }}
+        {{ form.name }}
+
+        <label for="{{ form.description.id_for_label }}">Description</label>
+        {{ form.description.errors }}
+        {{ form.description }}
+
+        <label for="{{ form.price.id_for_label }}">Price</label>
+        {{ form.price.errors }}
+        {{ form.price }}
+
+        <label for="{{ form.image.id_for_label }}">Image</label>
+        {{ form.image.errors }}
+        {{ form.image }}
+
+        <div class="form-actions">
+            <button type="submit" class="btn-submit">Save</button>
+        </div>
+    </form>
+</div>
+
+{% endblock %}

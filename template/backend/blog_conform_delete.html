@@ -1,0 +1,14 @@
+{% extends 'backend/base.html' %}
+{% block content %}
+
+<div class="form-container">
+    <h2>Delete Blog</h2>
+    <p>Are you sure you want to delete "{{ blog.title }}"?</p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn-submit" style="background:red;">Yes, Delete</button>
+        <a href="{% url 'backend:blog_list' %}" class="btn-submit" style="background:#6c757d; text-decoration:none;">Cancel</a>
+    </form>
+</div>
+
+{% endblock %}
